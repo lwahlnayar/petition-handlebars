@@ -1,0 +1,68 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    background: tomato;
+}
+
+html,
+body {
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
+    font-family: sans-serif;
+}
+
+.listContain {
+    display: block;
+    text-align: center;
+    width: 100%;
+    max-width: 960px;
+    height: 100%;
+}
+
+#hawaii_img {
+    margin: 20px;
+    border: 3.5px black solid;
+}
+
+.ordered_list {
+    margin-left: 18px;
+    margin: 0 auto;
+    width: max-content;
+}
+
+h1 {
+    margin-bottom: 25px;
+}
+
+li {
+    font-style: italic;
+    margin: 3px;
+    width: max-content;
+}
+
+li:first-child {
+    margin-top: 10px;
+}
+
+li:last-child {
+    margin-bottom: 30px;
+}
+
+.thanksContain {
+    text-align: center;
+    width: 100%;
+    max-width: 960px;
+    height: 100%;
+    margin-top: 50px;
+}
+
+#sigId {
+    border: black dotted 2px;
+    margin: 30px;
+}
+
+#thumbsUp {
+    margin: 40px;
+}
