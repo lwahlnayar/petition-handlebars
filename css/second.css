@@ -14,7 +14,7 @@ body {
 }
 
 p {
-    margin: 5px;
+    margin: 2px;
 }
 
 #hawaii_img {
@@ -61,6 +61,10 @@ li:last-child {
 
 #thumbsUp {
     margin: 40px;
+}
+
+.userSpan {
+    color: yellow;
 }
 
 .input_holder {

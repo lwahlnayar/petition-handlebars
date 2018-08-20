@@ -1,4 +1,4 @@
-<form method="post" class="petition-form" autocomplete="off">
+<form method="post" class="petition-form">
 <div class="input_holder">
   <input type="text" name="firstname"> First Name
 </div>
@@ -6,12 +6,12 @@
   <input type="text" name="lastname"> Last Name
 </div>
 <div>
-  <input type="text" name="sig" value="" id="sig_input">
+  <input type="hidden" name="sig" value="" id="sig_input">
 </div>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
 {{>canvas}}
 
-<button name="button">Submit</button>
-
+<button type="submit" name="button" class="submitButton">Submit</button>
+<button name="reset" type="button" id="resetButton">Reset Signature</button>
 </form>

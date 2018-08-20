@@ -12,7 +12,8 @@ const {
     createUser,
     getPasswordSql,
     getIdSql,
-    getName
+    getName,
+    getIdSig
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
@@ -69,20 +70,34 @@ const checkLoginRegister = (req, res, next) => {
     }
 };
 
+const checkSignedAlready = (req, res, next) => {
+    if (req.session.checked) {
+        res.redirect("/thankyou");
+    } else {
+        next();
+    }
+};
+
 app.get("/", (req, res) => {
     res.redirect("/petition_home");
 });
 
-app.get("/petition_home", checkForUserSession, (req, res) => {
-    getName(req.session.loggedIn).then(userName => {
-        res.render("body_home.handlebars", {
-            layout: "main_layout.handlebars",
-            currentUser: userName.rows[0].first_name
+app.get(
+    "/petition_home",
+    checkForUserSession,
+    checkSignedAlready,
+    (req, res) => {
+        getName(req.session.loggedIn).then(userName => {
+            res.render("body_home.handlebars", {
+                layout: "main_layout.handlebars",
+                currentUser: userName.rows[0].first_name
+            });
         });
-    });
-});
+    }
+);
 
 app.post("/petition_home", (req, res) => {
+    console.log("SIG:", req.body.sig);
     pushSigs(
         req.body.firstname,
         req.body.lastname,
@@ -90,7 +105,6 @@ app.post("/petition_home", (req, res) => {
         req.session.loggedIn
     )
         .then(function(idVal) {
-            console.log("success! val of id:", idVal.rows[0].id);
             req.session.checked = idVal.rows[0].id; //puts the property of Id into cookie
             res.redirect("/thankyou");
         })
@@ -116,7 +130,6 @@ app.post("/register", (req, res) => {
     if (req.body.password.length > 0) {
         hashPass(req.body.password)
             .then(hashedPassword => {
-                console.log(hashedPassword);
                 return createUser(
                     req.body.firstname,
                     req.body.lastname,
@@ -159,7 +172,14 @@ app.post("/login", (req, res) => {
             if (checkPassResult) {
                 getIdSql(req.body.email).then(queryResponse => {
                     req.session.loggedIn = queryResponse.rows[0].id;
-                    res.redirect("/petition_home");
+                    getIdSig(req.session.loggedIn).then(idMatch => {
+                        if (idMatch.rows[0].id) {
+                            req.session.checked = idMatch.rows[0].id;
+                            res.redirect("/thankyou");
+                        } else {
+                            res.redirect("/petition_home");
+                        }
+                    });
                 });
             }
         })

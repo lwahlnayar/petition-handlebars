@@ -62,3 +62,9 @@ module.exports.getName = function(idarg) {
         idarg || null
     ]);
 };
+
+module.exports.getIdSig = function(idarg) {
+    return db.query(`SELECT id FROM signatures WHERE user_id = $1`, [
+        idarg || null
+    ]);
+};

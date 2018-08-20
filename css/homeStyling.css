@@ -84,18 +84,14 @@ input {
     margin-bottom: 1.5px;
 }
 
-#sig_input {
-    display: none;
-}
-
 button {
-    width: 60px;
+    width: 70px;
     height: 30px;
     border-radius: 45px;
     border: black 2px solid;
     background: yellow;
     cursor: pointer;
-    transform: translate(220px, -178px);
+    transform: translate(295px, -178px);
     font-weight: bold;
 }
 
@@ -103,6 +99,13 @@ button:hover {
     background-color: greenyellow;
     position: relative;
     top: 2px;
+}
+
+#resetButton {
+    outline: none;
+    position: relative;
+    transform: translate(215px, -50px);
+    width: 130px;
 }
 
 .below_sig {

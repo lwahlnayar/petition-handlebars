@@ -1,5 +1,11 @@
 const canvas = document.getElementById("canvas");
+const resetButton = document.getElementById("resetButton");
+
 var c = canvas.getContext("2d");
+
+canvas.ondragstart = function() {
+    return false;
+};
 
 c.strokeStyle = "#383428";
 var x;
@@ -21,10 +27,21 @@ canvas.addEventListener("mousedown", function(e) {
             c.stroke();
         })
     );
+    canvas.addEventListener("mouseleave", function() {
+        canvas.removeEventListener("mousemove", move);
+        sig.value = canvas.toDataURL();
+    });
 });
 
-document.addEventListener("mouseup", function() {
+canvas.addEventListener("mouseup", function() {
     canvas.removeEventListener("mousemove", move);
     sig.value = canvas.toDataURL();
-    console.log("sig.val: ", sig.value);
+});
+
+resetButton.addEventListener("click", function() {
+    var context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.beginPath();
+    sig.value = "";
+    console.log(sig.value);
 });
