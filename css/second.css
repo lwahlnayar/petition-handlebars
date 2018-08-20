@@ -13,17 +13,21 @@ body {
     font-family: sans-serif;
 }
 
-.listContain {
-    display: block;
-    text-align: center;
-    width: 100%;
-    max-width: 960px;
-    height: 100%;
+p {
+    margin: 5px;
 }
 
 #hawaii_img {
     margin: 20px;
     border: 3.5px black solid;
+}
+
+.contain {
+    text-align: center;
+    width: 100%;
+    max-width: 960px;
+    height: 100%;
+    margin-top: 20px;
 }
 
 .ordered_list {
@@ -33,7 +37,7 @@ body {
 }
 
 h1 {
-    margin-bottom: 25px;
+    margin-bottom: 18px;
 }
 
 li {
@@ -50,14 +54,6 @@ li:last-child {
     margin-bottom: 30px;
 }
 
-.thanksContain {
-    text-align: center;
-    width: 100%;
-    max-width: 960px;
-    height: 100%;
-    margin-top: 50px;
-}
-
 #sigId {
     border: black dotted 2px;
     margin: 30px;
@@ -65,4 +61,52 @@ li:last-child {
 
 #thumbsUp {
     margin: 40px;
+}
+
+.input_holder {
+    height: 50px;
+    width: 170px;
+    display: block;
+}
+
+.errorMessage {
+    width: 100%;
+    font-size: 18px;
+    max-width: 960px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-style: oblique;
+}
+
+input {
+    background: white;
+    margin-bottom: 1.5px;
+}
+
+form {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 170px;
+    margin: 0 auto;
+    margin-top: 18px;
+}
+
+button {
+    width: 72px;
+    height: 30px;
+    border-radius: 45px;
+    border: black 2px solid;
+    background: yellow;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: greenyellow;
+    position: relative;
+    top: 2px;
 }

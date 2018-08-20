@@ -12,6 +12,6 @@
         jackie2.classList.add("moveSecond");
     };
 
-    setTimeout(moveJackie, 2000);
-    setTimeout(moveJackie2, 2000);
+    setTimeout(moveJackie, 300);
+    setTimeout(moveJackie2, 300);
 })();

@@ -50,20 +50,6 @@ h2 {
     text-align: center;
 }
 
-h1 {
-    font-size: 35px;
-}
-
-.userSpan {
-    color: yellow;
-}
-
-.ugly {
-    font-family: creepster;
-    color: yellow;
-    -webkit-text-stroke: black 0.1px;
-}
-
 .errorMessage {
     width: 100%;
     max-width: 960px;
