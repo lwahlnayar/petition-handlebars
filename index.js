@@ -16,7 +16,8 @@ const {
     getIdSig,
     pushProfile,
     getSignature,
-    countSignatures
+    countSignatures,
+    getCitySigs
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
@@ -60,7 +61,6 @@ const checkForUserSession = (req, res, next) => {
 
 const checkForSigSession = (req, res, next) => {
     if (!req.session.checked) {
-        console.log(1);
         res.redirect("/petition_home");
     } else {
         next();
@@ -69,7 +69,6 @@ const checkForSigSession = (req, res, next) => {
 
 const checkLoginRegister = (req, res, next) => {
     if (req.session.loggedIn) {
-        console.log(2);
         res.redirect("/petition_home");
     } else {
         next();
@@ -78,8 +77,6 @@ const checkLoginRegister = (req, res, next) => {
 
 const checkSignedAlready = (req, res, next) => {
     if (req.session.checked) {
-        console.log(3);
-        console.log("REQ SESSION", req.session);
         res.redirect("/thankyou");
     } else {
         next();
@@ -97,7 +94,6 @@ app.get("/profile", checkForUserSession, (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
-    console.log(req.body);
     pushProfile(
         req.body.age,
         req.body.city,
@@ -105,7 +101,6 @@ app.post("/profile", (req, res) => {
         req.session.loggedIn
     )
         .then(pushObj => {
-            console.log(pushObj);
             res.redirect("/petition_home");
         })
         .catch(e => {
@@ -246,7 +241,18 @@ app.get("/list_signups", checkForUserSession, (req, res) => {
                 signers: signers
             });
         })
-        .catch(e => console.log(e));
+        .catch(e => console.log("LIST SIGNUP GET ROUTE:", e));
+});
+
+app.get("/list_signups/:cityName", checkForUserSession, (req, res) => {
+    getCitySigs(req.params.cityName)
+        .then(function(signers) {
+            res.render("list.handlebars", {
+                layout: "secondary_layout.handlebars",
+                signers: signers
+            });
+        })
+        .catch(e => console.log("LIST SIGNUP GET ROUTE:", e));
 });
 
 app.get("/logout", (req, res) => {
@@ -255,6 +261,5 @@ app.get("/logout", (req, res) => {
 });
 
 //add logout button
-//bug signatures on thankyou page (wont appear multiple strokes)
 
 app.listen(8080, chalkAnimation.neon("I'm listening: "));

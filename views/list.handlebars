@@ -1,12 +1,12 @@
 <section class="contain">
-  <img src="./pizza_hawaii.jpg" alt="pizza hawaii" width= "400px" id="hawaii_img">
+  <img src="/pizza_hawaii.jpg" alt="pizza hawaii" width= "400px" id="hawaii_img">
   <h1>- Find below the honorable people who signed up for the good cause -</h1>
   <ol class="ordered_list">
   {{#signers}}
   {{#if homepage}}
-    <li><a href="https://{{homepage}}">{{first_name}} {{last_name}}</a> {{age}} <a href="#">{{city}}</a></li>
+    <li><a href="https://{{homepage}}">{{first_name}} {{last_name}}</a> {{age}} <a href="/list_signups/{{city}}">{{city}}</a></li>
   {{else}}
-    <li>{{first_name}} {{last_name}} {{age}} <a href="#">{{city}}</a></li>
+    <li>{{first_name}} {{last_name}} {{age}} <a href="/list_signups/{{city}}">{{city}}</a></li>
   {{/if}}
   {{/signers}}
   </ol>

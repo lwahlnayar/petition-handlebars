@@ -7,21 +7,20 @@ module.exports.getAllData = function() {
     return db
         .query(
             `SELECT
-           users.id,
-           users.first_name,
-           users.last_name,
-           user_profiles.homepage,
-           user_profiles.city,
-           user_profiles.age,
-           signatures.signature
-           FROM users
-           JOIN user_profiles
-              ON users.id = user_profiles.user_id
-           JOIN signatures
-              ON user_profiles.user_id = signatures.user_id `
+             users.id,
+             users.first_name,
+             users.last_name,
+             user_profiles.homepage,
+             user_profiles.city,
+             user_profiles.age,
+             signatures.signature
+             FROM users
+             JOIN user_profiles
+                ON users.id = user_profiles.user_id
+             JOIN signatures
+                ON user_profiles.user_id = signatures.user_id `
         )
         .then(results => {
-            // console.log("getSigners returns-> ____", results.rows);
             return results.rows;
         });
 };
@@ -87,4 +86,24 @@ module.exports.getIdSig = function(idarg) {
     return db.query(`SELECT id FROM signatures WHERE user_id = $1`, [
         idarg || null
     ]);
+};
+
+module.exports.getCitySigs = function(cityarg) {
+    return db
+        .query(
+            `SELECT
+         users.first_name,
+         users.last_name,
+         user_profiles.age,
+         user_profiles.city,
+         user_profiles.homepage
+         FROM user_profiles
+         JOIN users
+          ON users.id = user_profiles.user_id
+         WHERE user_profiles.city = $1`,
+            [cityarg || null]
+        )
+        .then(results => {
+            return results.rows;
+        });
 };
