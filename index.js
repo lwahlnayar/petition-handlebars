@@ -17,7 +17,8 @@ const {
     pushProfile,
     getSignature,
     countSignatures,
-    getCitySigs
+    getCitySigs,
+    getAllCities
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
@@ -245,16 +246,29 @@ app.get("/list_signups", checkForUserSession, (req, res) => {
 });
 
 app.get("/list_signups/:cityName", checkForUserSession, (req, res) => {
-    getCitySigs(req.params.cityName)
-        .then(function(signers) {
-            const plugin = `<a href="/list_signups">Back to all Sigs</a>`;
-            res.render("list.handlebars", {
-                layout: "secondary_layout.handlebars",
-                signers: signers,
-                backButton: plugin
-            });
-        })
-        .catch(e => console.log("LIST SIGNUP GET ROUTE:", e));
+    getAllData().then(data => {
+        //this blocks users to enter random urls
+        allCities = [];
+        for (let each in data) {
+            if (data[each].city != null && data[each].city.length != "") {
+                allCities.push(data[each].city);
+            }
+        }
+        if (allCities.includes(req.params.cityName)) {
+            getCitySigs(req.params.cityName) //redirects to filtered page
+                .then(function(signers) {
+                    const plugin = `<a href="/list_signups">Back to all Sigs</a>`;
+                    res.render("list.handlebars", {
+                        layout: "secondary_layout.handlebars",
+                        signers: signers,
+                        backButton: plugin
+                    });
+                })
+                .catch(e => console.log("LIST SIGNUP GET ROUTE:", e));
+        } else {
+            res.redirect("/list_signups");
+        }
+    });
 });
 
 app.get("/logout", (req, res) => {
