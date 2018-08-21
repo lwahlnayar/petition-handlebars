@@ -13,14 +13,14 @@ CREATE TABLE users(
 
 CREATE TABLE signatures (
   id SERIAL PRIMARY KEY,
-  signature TEXT not null,
+  signature TEXT NOT NULL,
   user_id INTEGER REFERENCES users(id) NOT NULL -- foreign
 );
 
 CREATE TABLE user_profiles (
   id SERIAL PRIMARY KEY,
   age INTEGER,
-  city VARCHAR(200),
+  city VARCHAR(255),
   homepage VARCHAR(255),
   user_id INTEGER REFERENCES users(id) NOT NULL -- foreign
 );

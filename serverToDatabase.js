@@ -3,14 +3,30 @@ const spicedPg = require("spiced-pg");
 //Makes connection from server to database
 const db = spicedPg("postgres:Rodney:postgres@localhost:5432/signaturesDb");
 
-// Runs query from server
-module.exports.getSigners = function getSigners() {
-    return db.query("SELECT * FROM signatures").then(results => {
-        return results.rows;
-    });
+module.exports.getAllData = function() {
+    return db
+        .query(
+            `SELECT
+           users.id,
+           users.first_name,
+           users.last_name,
+           user_profiles.homepage,
+           user_profiles.city,
+           user_profiles.age,
+           signatures.signature
+           FROM users
+           JOIN user_profiles
+              ON users.id = user_profiles.user_id
+           JOIN signatures
+              ON user_profiles.user_id = signatures.user_id `
+        )
+        .then(results => {
+            // console.log("getSigners returns-> ____", results.rows);
+            return results.rows;
+        });
 };
 
-module.exports.pushSigs = function pushSigs(sigarg, idarg) {
+module.exports.pushSigs = function(sigarg, idarg) {
     return db.query(
         `INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id`,
         [sigarg || null, idarg || null]
@@ -20,11 +36,11 @@ module.exports.pushSigs = function pushSigs(sigarg, idarg) {
 module.exports.pushProfile = function(age, city, homepage, idarg) {
     return db.query(
         `INSERT INTO user_profiles (age, city, homepage, user_id) VALUES ($1, $2, $3, $4) RETURNING id`,
-        [age, city, homepage, idarg || null]
+        [age || null, city || null, homepage || null, idarg]
     );
 };
 
-module.exports.createUser = function createUser(
+module.exports.createUser = function(
     firstnamearg,
     lastnamearg,
     emailarg,
@@ -57,6 +73,14 @@ module.exports.getName = function(idarg) {
     return db.query(`SELECT first_name FROM users WHERE id = $1`, [
         idarg || null
     ]);
+};
+
+module.exports.getSignature = function(idarg) {
+    return db.query(`SELECT signature FROM signatures WHERE id = $1`, [idarg]);
+};
+
+module.exports.countSignatures = function() {
+    return db.query(`SELECT count(*) FROM signatures`);
 };
 
 module.exports.getIdSig = function(idarg) {

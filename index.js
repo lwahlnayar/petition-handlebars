@@ -7,14 +7,16 @@ app.set("view engine", "handlebars");
 const fs = require("fs");
 const csurf = require("csurf");
 const {
-    getSigners,
+    getAllData,
     pushSigs,
     createUser,
     getPasswordSql,
     getIdSql,
     getName,
     getIdSig,
-    pushProfile
+    pushProfile,
+    getSignature,
+    countSignatures
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
@@ -50,7 +52,6 @@ app.use(express.static("./css"));
 //PURPOSE: to check if user has USER session when entering that page. if not, send to home page
 const checkForUserSession = (req, res, next) => {
     if (!req.session.loggedIn) {
-        console.log(0);
         res.redirect("/register");
     } else {
         next();
@@ -109,6 +110,10 @@ app.post("/profile", (req, res) => {
         })
         .catch(e => {
             console.log("ERROOOOR", e);
+            res.render("profile.handlebars", {
+                layout: "secondary_layout.handlebars",
+                error: true
+            });
         });
 });
 
@@ -127,14 +132,13 @@ app.get(
 );
 
 app.post("/petition_home", (req, res) => {
-    console.log("SIG:", req.body.sig);
     pushSigs(req.body.sig, req.session.loggedIn)
         .then(function(idVal) {
             req.session.checked = idVal.rows[0].id; //puts the property of Id into cookie
             res.redirect("/thankyou");
         })
         .catch(function(e) {
-            console.log(e);
+            console.log("PETITION POST CATCH ERROR:", e);
             getName(req.session.loggedIn).then(userName => {
                 res.render("body_home.handlebars", {
                     layout: "main_layout.handlebars",
@@ -216,30 +220,42 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/thankyou", checkForUserSession, checkForSigSession, (req, res) => {
-    getSigners()
-        .then(function(signers) {
-            let match = 0;
-            for (let eachSig = 0; eachSig < signers.length; eachSig++) {
-                if (signers[eachSig].id == req.session.checked) {
-                    match = signers[eachSig].signature;
-                }
-            }
-            getName(req.session.loggedIn).then(userName => {
-                res.render("thankyou_body.handlebars", {
-                    layout: "secondary_layout.handlebars",
-                    currentUser: userName.rows[0].first_name,
-                    userSignature: match,
-                    numberSigners: signers.length
-                });
+    console.log("REQ SESSION ------------<", req.session.checked);
+    Promise.all([
+        getSignature(req.session.checked),
+        countSignatures(),
+        getName(req.session.loggedIn)
+    ])
+        .then(([signature, numSigs, userName]) => {
+            // console.log("SIGS ---------------->", signature);
+            console.log("NUMSIGS ---------------->", numSigs.rows[0].count);
+            // console.log("USERNAME ---------------->", userName);
+            res.render("thankyou_body.handlebars", {
+                layout: "secondary_layout.handlebars",
+                currentUser: userName.rows[0].first_name,
+                userSignature: signature.rows[0].signature,
+                numberSigners: numSigs.rows[0].count
             });
         })
-        .catch(function(e) {
-            console.log(e);
+        .catch(e => {
+            console.log("ERROR THANKYOU GET ROUTE:", e);
         });
+    // getSignature(req.session.loggedIn).then(signature => {
+    //     // console.log("SIGNATURE:", signature);
+    //     getName(req.session.loggedIn).then(userName => {
+    //         console.log("REQ SESSION -----", req.session);
+    //         res.render("thankyou_body.handlebars", {
+    //             layout: "secondary_layout.handlebars",
+    //             currentUser: userName.rows[0].first_name,
+    //             userSignature: signature.rows[0].signature
+    //             // numberSigners: signers.length
+    //         });
+    //     });
+    // });
 });
 
 app.get("/list_signups", checkForUserSession, (req, res) => {
-    getSigners()
+    getAllData()
         .then(function(signers) {
             res.render("list.handlebars", {
                 layout: "secondary_layout.handlebars",
@@ -255,5 +271,6 @@ app.get("/logout", (req, res) => {
 });
 
 //add logout button
+//bug signatures on thankyou page (wont appear multiple strokes)
 
 app.listen(8080, chalkAnimation.neon("I'm listening: "));

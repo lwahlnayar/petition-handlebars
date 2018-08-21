@@ -3,7 +3,11 @@
   <h1>- Find below the honorable people who signed up for the good cause -</h1>
   <ol class="ordered_list">
   {{#signers}}
-  <li>{{first_name}} {{last_name}}</li>
+  {{#if homepage}}
+    <li><a href="https://{{homepage}}">{{first_name}} {{last_name}}</a> {{age}} {{city}}</li>
+  {{else}}
+    <li>{{first_name}} {{last_name}} {{age}} {{city}}</li>
+  {{/if}}
   {{/signers}}
   </ol>
 </section>
