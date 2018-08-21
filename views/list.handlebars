@@ -4,9 +4,9 @@
   <ol class="ordered_list">
   {{#signers}}
   {{#if homepage}}
-    <li><a href="https://{{homepage}}">{{first_name}} {{last_name}}</a> {{age}} {{city}}</li>
+    <li><a href="https://{{homepage}}">{{first_name}} {{last_name}}</a> {{age}} <a href="#">{{city}}</a></li>
   {{else}}
-    <li>{{first_name}} {{last_name}} {{age}} {{city}}</li>
+    <li>{{first_name}} {{last_name}} {{age}} <a href="#">{{city}}</a></li>
   {{/if}}
   {{/signers}}
   </ol>
