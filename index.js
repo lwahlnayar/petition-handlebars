@@ -220,16 +220,12 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/thankyou", checkForUserSession, checkForSigSession, (req, res) => {
-    console.log("REQ SESSION ------------<", req.session.checked);
     Promise.all([
         getSignature(req.session.checked),
         countSignatures(),
         getName(req.session.loggedIn)
     ])
         .then(([signature, numSigs, userName]) => {
-            // console.log("SIGS ---------------->", signature);
-            console.log("NUMSIGS ---------------->", numSigs.rows[0].count);
-            // console.log("USERNAME ---------------->", userName);
             res.render("thankyou_body.handlebars", {
                 layout: "secondary_layout.handlebars",
                 currentUser: userName.rows[0].first_name,
@@ -240,18 +236,6 @@ app.get("/thankyou", checkForUserSession, checkForSigSession, (req, res) => {
         .catch(e => {
             console.log("ERROR THANKYOU GET ROUTE:", e);
         });
-    // getSignature(req.session.loggedIn).then(signature => {
-    //     // console.log("SIGNATURE:", signature);
-    //     getName(req.session.loggedIn).then(userName => {
-    //         console.log("REQ SESSION -----", req.session);
-    //         res.render("thankyou_body.handlebars", {
-    //             layout: "secondary_layout.handlebars",
-    //             currentUser: userName.rows[0].first_name,
-    //             userSignature: signature.rows[0].signature
-    //             // numberSigners: signers.length
-    //         });
-    //     });
-    // });
 });
 
 app.get("/list_signups", checkForUserSession, (req, res) => {
