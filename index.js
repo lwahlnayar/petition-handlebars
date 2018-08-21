@@ -13,7 +13,8 @@ const {
     getPasswordSql,
     getIdSql,
     getName,
-    getIdSig
+    getIdSig,
+    pushProfile
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
@@ -39,6 +40,7 @@ app.use(function(req, res, next) {
     res.setHeader("x-frame-options", "DENY");
     next();
 });
+app.disable("x-powered-by");
 
 //Boilerplate above
 
@@ -48,6 +50,7 @@ app.use(express.static("./css"));
 //PURPOSE: to check if user has USER session when entering that page. if not, send to home page
 const checkForUserSession = (req, res, next) => {
     if (!req.session.loggedIn) {
+        console.log(0);
         res.redirect("/register");
     } else {
         next();
@@ -56,6 +59,7 @@ const checkForUserSession = (req, res, next) => {
 
 const checkForSigSession = (req, res, next) => {
     if (!req.session.checked) {
+        console.log(1);
         res.redirect("/petition_home");
     } else {
         next();
@@ -64,6 +68,7 @@ const checkForSigSession = (req, res, next) => {
 
 const checkLoginRegister = (req, res, next) => {
     if (req.session.loggedIn) {
+        console.log(2);
         res.redirect("/petition_home");
     } else {
         next();
@@ -72,6 +77,8 @@ const checkLoginRegister = (req, res, next) => {
 
 const checkSignedAlready = (req, res, next) => {
     if (req.session.checked) {
+        console.log(3);
+        console.log("REQ SESSION", req.session);
         res.redirect("/thankyou");
     } else {
         next();
@@ -80,6 +87,29 @@ const checkSignedAlready = (req, res, next) => {
 
 app.get("/", (req, res) => {
     res.redirect("/petition_home");
+});
+
+app.get("/profile", checkForUserSession, (req, res) => {
+    res.render("profile.handlebars", {
+        layout: "secondary_layout.handlebars"
+    });
+});
+
+app.post("/profile", (req, res) => {
+    console.log(req.body);
+    pushProfile(
+        req.body.age,
+        req.body.city,
+        req.body.homepage,
+        req.session.loggedIn
+    )
+        .then(pushObj => {
+            console.log(pushObj);
+            res.redirect("/petition_home");
+        })
+        .catch(e => {
+            console.log("ERROOOOR", e);
+        });
 });
 
 app.get(
@@ -98,12 +128,7 @@ app.get(
 
 app.post("/petition_home", (req, res) => {
     console.log("SIG:", req.body.sig);
-    pushSigs(
-        req.body.firstname,
-        req.body.lastname,
-        req.body.sig,
-        req.session.loggedIn
-    )
+    pushSigs(req.body.sig, req.session.loggedIn)
         .then(function(idVal) {
             req.session.checked = idVal.rows[0].id; //puts the property of Id into cookie
             res.redirect("/thankyou");
@@ -139,10 +164,9 @@ app.post("/register", (req, res) => {
             })
             .then(idVal => {
                 req.session.loggedIn = idVal.rows[0].id;
-                res.redirect("/petition_home");
+                res.redirect("/profile");
             })
             .catch(e => {
-                console.log("ERROR AT CREATE USER:", e);
                 res.render("register.handlebars", {
                     layout: "secondary_layout.handlebars",
                     error: true
@@ -168,16 +192,15 @@ app.post("/login", (req, res) => {
             return checkPass(req.body.password, queryResponse.rows[0].password);
         })
         .then(checkPassResult => {
-            console.log(checkPassResult);
             if (checkPassResult) {
                 getIdSql(req.body.email).then(queryResponse => {
                     req.session.loggedIn = queryResponse.rows[0].id;
                     getIdSig(req.session.loggedIn).then(idMatch => {
-                        if (idMatch.rows[0].id) {
+                        if (idMatch.rows.length == 0) {
+                            res.redirect("/petition_home");
+                        } else {
                             req.session.checked = idMatch.rows[0].id;
                             res.redirect("/thankyou");
-                        } else {
-                            res.redirect("/petition_home");
                         }
                     });
                 });
@@ -226,7 +249,11 @@ app.get("/list_signups", checkForUserSession, (req, res) => {
         .catch(e => console.log(e));
 });
 
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/register");
+});
+
 //add logout button
-//bug with sig
 
 app.listen(8080, chalkAnimation.neon("I'm listening: "));

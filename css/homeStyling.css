@@ -73,17 +73,6 @@ h1 {
     font-style: oblique;
 }
 
-.input_holder {
-    height: 50px;
-    width: 170px;
-    display: inline-block;
-}
-
-input {
-    background: white;
-    margin-bottom: 1.5px;
-}
-
 button {
     width: 70px;
     height: 30px;

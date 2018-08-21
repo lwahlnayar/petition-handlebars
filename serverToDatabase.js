@@ -6,25 +6,21 @@ const db = spicedPg("postgres:Rodney:postgres@localhost:5432/signaturesDb");
 // Runs query from server
 module.exports.getSigners = function getSigners() {
     return db.query("SELECT * FROM signatures").then(results => {
-        // console.log(results.rows);
         return results.rows;
     });
 };
 
-module.exports.pushSigs = function pushSigs(
-    firstnamearg,
-    lastnamearg,
-    sigarg,
-    idarg
-) {
+module.exports.pushSigs = function pushSigs(sigarg, idarg) {
     return db.query(
-        `INSERT INTO signatures (first_name, last_name, signature, user_id) VALUES ($1, $2, $3, $4) RETURNING id`,
-        [
-            firstnamearg || null,
-            lastnamearg || null,
-            sigarg || null,
-            idarg || null
-        ]
+        `INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id`,
+        [sigarg || null, idarg || null]
+    );
+};
+
+module.exports.pushProfile = function(age, city, homepage, idarg) {
+    return db.query(
+        `INSERT INTO user_profiles (age, city, homepage, user_id) VALUES ($1, $2, $3, $4) RETURNING id`,
+        [age, city, homepage, idarg || null]
     );
 };
 
