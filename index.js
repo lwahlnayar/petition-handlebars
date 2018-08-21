@@ -247,9 +247,11 @@ app.get("/list_signups", checkForUserSession, (req, res) => {
 app.get("/list_signups/:cityName", checkForUserSession, (req, res) => {
     getCitySigs(req.params.cityName)
         .then(function(signers) {
+            const plugin = `<a href="/list_signups">Back to all Sigs</a>`;
             res.render("list.handlebars", {
                 layout: "secondary_layout.handlebars",
-                signers: signers
+                signers: signers,
+                backButton: plugin
             });
         })
         .catch(e => console.log("LIST SIGNUP GET ROUTE:", e));
