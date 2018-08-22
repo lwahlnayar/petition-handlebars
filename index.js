@@ -146,7 +146,7 @@ app.post("/profile/edit", checkForUserSession, (req, res) => {
             .then(() => {
                 res.redirect("/petition_home"); //subject to change
             })
-            .catch((e, val) => {
+            .catch(e => {
                 getUserEditData(req.session.loggedIn).then(userData => {
                     console.log("POST EDIT ERROR --->", e);
                     res.render("edit.handlebars", {
@@ -160,31 +160,34 @@ app.post("/profile/edit", checkForUserSession, (req, res) => {
     if (req.body.password.length > 0) {
         //update WITH password
         hashPass(req.body.password).then(hashedPassword => {
-            updateUserTablePw(
-                req.body.firstname,
-                req.body.lastname,
-                req.body.email,
-                hashedPassword,
-                req.session.loggedIn
-            ).catch(e => {
-                console.log("updateUserTablePW ERROR --->", e);
-                res.render("edit.handlebars", {
-                    layout: "secondary_layout.handlebars",
-                    error: true
+            Promise.all([
+                updateUserTablePw(
+                    req.body.firstname,
+                    req.body.lastname,
+                    req.body.email,
+                    hashedPassword,
+                    req.session.loggedIn
+                ),
+                upsertUserProfiles(
+                    req.body.homepage,
+                    req.body.city,
+                    req.body.age,
+                    req.session.loggedIn
+                )
+            ])
+                .then(() => {
+                    res.redirect("/petition_home");
+                })
+                .catch(e => {
+                    getUserEditData(req.session.loggedIn).then(userData => {
+                        console.log("POST EDIT ERROR --->", e);
+                        res.render("edit.handlebars", {
+                            layout: "secondary_layout.handlebars",
+                            userData: userData,
+                            error: true
+                        });
+                    });
                 });
-            });
-        });
-        upsertUserProfiles(
-            req.body.homepage,
-            req.body.city,
-            req.body.age,
-            req.session.loggedIn
-        ).catch(e => {
-            console.log("upSERTUserTable ERROR --->", e);
-            res.render("edit.handlebars", {
-                layout: "secondary_layout.handlebars",
-                error: true
-            });
         });
     }
 });
