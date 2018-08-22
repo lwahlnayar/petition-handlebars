@@ -115,6 +115,11 @@ button:hover {
     top: 2px;
 }
 
+#deleteButton {
+    width: 80px;
+    height: 45px;
+}
+
 ::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
     color: lightsalmon;

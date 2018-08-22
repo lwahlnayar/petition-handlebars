@@ -3,6 +3,10 @@
   <img src="/thumbsUp.png" alt="success" width="250" id="thumbsUp">
   <h2>By participating, you have helped the culinary world become a better place.</h2>
   <img src="{{userSignature}}" alt="signature" id="sigId">
+  {{>formButtonDelete}}
+  <div class="editProfile">
+    <a href="/profile/edit">Edit Your Profile</a>
+  </div>
   <div class="seeAllLink">
     <a href="/list_signups">See all signers!</a>
     <p>Number of signatures to date: {{numberSigners}}</p>

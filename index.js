@@ -359,5 +359,6 @@ app.get("/logout", (req, res) => {
 //add logout button
 //minor bug -> signature can be submitted while blank(hard reset all)
 //small bug -> list of sigs wont appear if you skip profile page
+//important-deletebutton -> delete sig property/id, redirect to petition_home
 
 app.listen(8080, chalkAnimation.neon("I'm listening: "));
