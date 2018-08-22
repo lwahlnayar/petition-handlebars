@@ -18,7 +18,8 @@ const {
     getSignature,
     countSignatures,
     getCitySigs,
-    getAllCities
+    getAllCities,
+    getUserEditData
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
@@ -112,7 +113,25 @@ app.post("/profile", (req, res) => {
             });
         });
 });
+////////////////////////////////////////////////////////////////////
+app.get("/profile/edit", checkForUserSession, (req, res) => {
+    getUserEditData(req.session.loggedIn).then(userData => {
+        console.log("getUserEditData OBJECT RETURNED ----->", userData);
+        res.render("edit.handlebars", {
+            layout: "secondary_layout.handlebars",
+            userData: userData
+        });
+    });
+});
 
+app.post("/profile/edit", checkForUserSession, (req, res) => {
+    console.log("POST BUTTON / REQ BODY VALUE:", req.body);
+    // res.render("edit.handlebars", {
+    //     layout: "secondary_layout.handlebars"
+    // });
+});
+
+////////////////////////////////////////////////////////////////////
 app.get(
     "/petition_home",
     checkForUserSession,
@@ -277,5 +296,6 @@ app.get("/logout", (req, res) => {
 });
 
 //add logout button
+//minor bug -> signature can be submitted while blank(hard reset all)
 
 app.listen(8080, chalkAnimation.neon("I'm listening: "));

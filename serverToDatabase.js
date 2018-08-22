@@ -18,10 +18,33 @@ module.exports.getAllData = function() {
              JOIN user_profiles
                 ON users.id = user_profiles.user_id
              JOIN signatures
-                ON user_profiles.user_id = signatures.user_id `
+                ON user_profiles.user_id = signatures.user_id`
         )
         .then(results => {
             return results.rows;
+        });
+};
+
+module.exports.getUserEditData = function(idarg) {
+    return db
+        .query(
+            `SELECT
+           users.first_name,
+           users.last_name,
+           users.email,
+           users.password,
+           user_profiles.homepage,
+           user_profiles.city,
+           user_profiles.age
+           FROM users
+           JOIN user_profiles
+              ON users.id = user_profiles.user_id
+           WHERE user_profiles.user_id = $1`,
+            [idarg || null]
+        )
+        .then(results => {
+            // console.log("DIS HERE ---->", results.rows);
+            return results.rows[0];
         });
 };
 

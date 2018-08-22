@@ -112,7 +112,7 @@ button:hover {
 }
 
 .moveFirst {
-    transform: translate(700px, -540px) rotate(720deg);
+    transform: translate(700px, -520px) rotate(720deg);
     transition-duration: 1s;
 }
 
@@ -121,7 +121,7 @@ button:hover {
 }
 
 .moveSecond {
-    transform: translate(-340px, -540px) rotate(720deg);
+    transform: translate(-340px, -520px) rotate(720deg);
     transition-duration: 1s;
 }
 

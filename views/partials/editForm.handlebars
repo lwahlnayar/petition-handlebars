@@ -1,0 +1,25 @@
+<form method="post" class="register-form" autocomplete="off">
+  <div class="input_holder">
+    <input type="text" name="firstname" value="{{userData.first_name}}"> First Name
+  </div>
+  <div class="input_holder">
+    <input type="text" name="lastname" value="{{userData.last_name}}"> Last Name
+  </div>
+  <div class="input_holder">
+    <input type="text" name="email" value="{{userData.email}}"> E-mail Address
+  </div>
+  <div class="input_holder">
+    <input type="password" name="password" value=""> Password
+  </div>
+  <div class="input_holder">
+    <input type="text" name="age" value="{{userData.age}}"> Age
+  </div>
+  <div class="input_holder">
+    <input type="text" name="city" value="{{userData.city}}"> City
+  </div>
+  <div class="input_holder">
+    <input type="text" name="homepage" value="{{userData.homepage}}"> Homepage
+  </div>
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+  <button name="editButton">Update</button>
+</form>
