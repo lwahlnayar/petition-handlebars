@@ -313,18 +313,13 @@ app.get("/thankyou", checkForUserSession, checkForSigSession, (req, res) => {
             console.log("ERROR THANKYOU GET ROUTE:", e);
         });
 });
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
+
 app.post("/thankyou", (req, res) => {
     deleteSigRow(req.session.checked).then(() => {
-        console.log("success");
         req.session.checked = null;
         res.redirect("/petition_home");
     });
 });
-
-///////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////
 
 app.get("/list_signups", checkForUserSession, (req, res) => {
     getAllData()
