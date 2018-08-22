@@ -173,3 +173,7 @@ module.exports.getCitySigs = function(cityarg) {
             return results.rows;
         });
 };
+
+module.exports.deleteSigRow = function(sigId) {
+    return db.query(`DELETE FROM signatures WHERE id = $1;`, [sigId]);
+};

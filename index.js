@@ -22,7 +22,8 @@ const {
     getUserEditData,
     updateUserTablePw,
     updateUserTable,
-    upsertUserProfiles
+    upsertUserProfiles,
+    deleteSigRow
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
@@ -116,7 +117,7 @@ app.post("/profile", (req, res) => {
             });
         });
 });
-////////////////////////////////////////////////////////////////////
+
 app.get("/profile/edit", checkForUserSession, (req, res) => {
     getUserEditData(req.session.loggedIn).then(userData => {
         res.render("edit.handlebars", {
@@ -192,7 +193,6 @@ app.post("/profile/edit", checkForUserSession, (req, res) => {
     }
 });
 
-////////////////////////////////////////////////////////////////////
 app.get(
     "/petition_home",
     checkForUserSession,
@@ -313,6 +313,18 @@ app.get("/thankyou", checkForUserSession, checkForSigSession, (req, res) => {
             console.log("ERROR THANKYOU GET ROUTE:", e);
         });
 });
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+app.post("/thankyou", (req, res) => {
+    deleteSigRow(req.session.checked).then(() => {
+        console.log("success");
+        req.session.checked = null;
+        res.redirect("/petition_home");
+    });
+});
+
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 app.get("/list_signups", checkForUserSession, (req, res) => {
     getAllData()
@@ -359,6 +371,5 @@ app.get("/logout", (req, res) => {
 //add logout button
 //minor bug -> signature can be submitted while blank(hard reset all)
 //small bug -> list of sigs wont appear if you skip profile page
-//important-deletebutton -> delete sig property/id, redirect to petition_home
 
 app.listen(8080, chalkAnimation.neon("I'm listening: "));
