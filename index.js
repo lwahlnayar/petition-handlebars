@@ -129,30 +129,33 @@ app.get("/profile/edit", checkForUserSession, (req, res) => {
 app.post("/profile/edit", checkForUserSession, (req, res) => {
     if (req.body.password.length == 0) {
         //update without password
-        updateUserTable(
-            req.body.firstname,
-            req.body.lastname,
-            req.body.email,
-            req.session.loggedIn
-        ).catch(e => {
-            console.log("updateUserTable ERROR --->", e);
-            res.render("edit.handlebars", {
-                layout: "secondary_layout.handlebars",
-                error: true
+        Promise.all([
+            updateUserTable(
+                req.body.firstname,
+                req.body.lastname,
+                req.body.email,
+                req.session.loggedIn
+            ),
+            upsertUserProfiles(
+                req.body.homepage,
+                req.body.city,
+                req.body.age,
+                req.session.loggedIn
+            )
+        ])
+            .then(() => {
+                res.redirect("/petition_home"); //subject to change
+            })
+            .catch((e, val) => {
+                getUserEditData(req.session.loggedIn).then(userData => {
+                    console.log("POST EDIT ERROR --->", e);
+                    res.render("edit.handlebars", {
+                        layout: "secondary_layout.handlebars",
+                        userData: userData,
+                        error: true
+                    });
+                });
             });
-        });
-        upsertUserProfiles(
-            req.body.homepage,
-            req.body.city,
-            req.body.age,
-            req.session.loggedIn
-        ).catch(e => {
-            console.log("upSERTUserTable ERROR --->", e);
-            res.render("edit.handlebars", {
-                layout: "secondary_layout.handlebars",
-                error: true
-            });
-        });
     }
     if (req.body.password.length > 0) {
         //update WITH password
