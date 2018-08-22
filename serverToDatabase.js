@@ -43,11 +43,54 @@ module.exports.getUserEditData = function(idarg) {
             [idarg || null]
         )
         .then(results => {
-            // console.log("DIS HERE ---->", results.rows);
             return results.rows[0];
         });
 };
+/////////////////////////////////////////////////////////////
+module.exports.updateUserTable = function(firstname, lastname, email, id) {
+    return db.query(
+        `UPDATE users
+             SET first_name = $1, last_name = $2, email = $3
+             WHERE id = $4;
+            `,
+        [firstname || null, lastname || null, email || null, id || null]
+    );
+};
 
+module.exports.updateUserTablePw = function(
+    firstname,
+    lastname,
+    email,
+    password,
+    id
+) {
+    return db.query(
+        `UPDATE users
+                 SET first_name = $1, last_name = $2, email = $3, password = $4
+                 WHERE id = $5;
+            `,
+        [
+            firstname || null,
+            lastname || null,
+            email || null,
+            password || null,
+            id || null
+        ]
+    );
+};
+
+module.exports.upsertUserProfiles = function(homepage, city, age, id) {
+    return db.query(
+        `INSERT INTO user_profiles (homepage, city, age, user_id)
+           VALUES ($1, $2, $3, $4)
+           ON CONFLICT (user_id)
+           DO UPDATE SET homepage = $1, city = $2, age = $3;
+          `,
+        [homepage || null, city || null, age || null, id]
+    );
+};
+
+////////////////////////////////////////////////////////////
 module.exports.pushSigs = function(sigarg, idarg) {
     return db.query(
         `INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id`,

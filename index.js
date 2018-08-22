@@ -19,7 +19,10 @@ const {
     countSignatures,
     getCitySigs,
     getAllCities,
-    getUserEditData
+    getUserEditData,
+    updateUserTablePw,
+    updateUserTable,
+    upsertUserProfiles
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
@@ -116,7 +119,6 @@ app.post("/profile", (req, res) => {
 ////////////////////////////////////////////////////////////////////
 app.get("/profile/edit", checkForUserSession, (req, res) => {
     getUserEditData(req.session.loggedIn).then(userData => {
-        console.log("getUserEditData OBJECT RETURNED ----->", userData);
         res.render("edit.handlebars", {
             layout: "secondary_layout.handlebars",
             userData: userData
@@ -125,10 +127,63 @@ app.get("/profile/edit", checkForUserSession, (req, res) => {
 });
 
 app.post("/profile/edit", checkForUserSession, (req, res) => {
-    console.log("POST BUTTON / REQ BODY VALUE:", req.body);
-    // res.render("edit.handlebars", {
-    //     layout: "secondary_layout.handlebars"
-    // });
+    if (req.body.password.length == 0) {
+        //update without password
+        updateUserTable(
+            req.body.firstname,
+            req.body.lastname,
+            req.body.email,
+            req.session.loggedIn
+        ).catch(e => {
+            console.log("updateUserTable ERROR --->", e);
+            res.render("edit.handlebars", {
+                layout: "secondary_layout.handlebars",
+                error: true
+            });
+        });
+        upsertUserProfiles(
+            req.body.homepage,
+            req.body.city,
+            req.body.age,
+            req.session.loggedIn
+        ).catch(e => {
+            console.log("upSERTUserTable ERROR --->", e);
+            res.render("edit.handlebars", {
+                layout: "secondary_layout.handlebars",
+                error: true
+            });
+        });
+    }
+    if (req.body.password.length > 0) {
+        //update WITH password
+        hashPass(req.body.password).then(hashedPassword => {
+            updateUserTablePw(
+                req.body.firstname,
+                req.body.lastname,
+                req.body.email,
+                hashedPassword,
+                req.session.loggedIn
+            ).catch(e => {
+                console.log("updateUserTablePW ERROR --->", e);
+                res.render("edit.handlebars", {
+                    layout: "secondary_layout.handlebars",
+                    error: true
+                });
+            });
+        });
+        upsertUserProfiles(
+            req.body.homepage,
+            req.body.city,
+            req.body.age,
+            req.session.loggedIn
+        ).catch(e => {
+            console.log("upSERTUserTable ERROR --->", e);
+            res.render("edit.handlebars", {
+                layout: "secondary_layout.handlebars",
+                error: true
+            });
+        });
+    }
 });
 
 ////////////////////////////////////////////////////////////////////
@@ -297,5 +352,6 @@ app.get("/logout", (req, res) => {
 
 //add logout button
 //minor bug -> signature can be submitted while blank(hard reset all)
+//small bug -> list of sigs wont appear if you skip profile page
 
 app.listen(8080, chalkAnimation.neon("I'm listening: "));

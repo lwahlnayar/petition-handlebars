@@ -14,7 +14,7 @@ CREATE TABLE users(
 CREATE TABLE signatures (
   id SERIAL PRIMARY KEY,
   signature TEXT NOT NULL,
-  user_id INTEGER REFERENCES users(id) NOT NULL -- foreign
+  user_id INTEGER UNIQUE REFERENCES users(id) NOT NULL  -- foreign
 );
 
 CREATE TABLE user_profiles (
@@ -22,5 +22,5 @@ CREATE TABLE user_profiles (
   age INTEGER,
   city VARCHAR(255),
   homepage VARCHAR(255),
-  user_id INTEGER REFERENCES users(id) NOT NULL -- foreign
+  user_id INTEGER UNIQUE REFERENCES users(id) NOT NULL -- foreign
 );
