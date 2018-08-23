@@ -17,6 +17,32 @@ body {
     justify-content: center;
 }
 
+.wrapper {
+    position: relative;
+}
+
+nav {
+    position: absolute;
+    top: 0;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+nav a {
+    margin: 12px;
+    margin-right: 25px;
+    text-decoration: none;
+    font-weight: bolder;
+    color: whitesmoke;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: yellow;
+    font-size: 19px;
+}
+
 canvas {
     border: black dotted 2px;
     background: lightsalmon;
@@ -47,6 +73,7 @@ form {
 h1,
 h2 {
     margin: 40px;
+    margin-top: 40px;
     text-align: center;
 }
 
@@ -60,6 +87,7 @@ h1 {
 
 .ugly {
     font-family: creepster;
+    font-size: 30px;
     color: yellow;
     -webkit-text-stroke: black 0.1px;
 }

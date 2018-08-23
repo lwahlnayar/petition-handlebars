@@ -10,16 +10,9 @@ body {
     display: flex;
     justify-content: center;
     min-height: 100%;
+    width: 100%;
     font-family: sans-serif;
-}
-
-p {
-    margin: 2px;
-}
-
-#hawaii_img {
-    margin: 20px;
-    border: 3.5px black solid;
+    overflow: hidden;
 }
 
 .contain {
@@ -28,17 +21,52 @@ p {
     width: 100%;
     max-width: 960px;
     height: 100%;
-    margin-top: 20px;
+}
+
+nav {
+    position: absolute;
+    top: 0;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+nav a {
+    margin: 12px;
+    margin-right: 25px;
+    text-decoration: none;
+    font-weight: bolder;
+    color: whitesmoke;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: yellow;
+    font-size: 19px;
+}
+
+#thanksTitle {
+    margin-top: 50px;
+}
+
+p {
+    margin: 2px;
+}
+
+#hawaii_img {
+    margin: 20px;
+    margin-top: 50px;
+    border: 3.5px black solid;
 }
 
 .ordered_list {
-    margin-left: 18px;
     margin: 0 auto;
     width: max-content;
+    transform: translateX(45px);
 }
 
 h1 {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 li {
@@ -48,7 +76,7 @@ li {
 }
 
 li:first-child {
-    margin-top: 10px;
+    margin-top: 35px;
 }
 
 li:last-child {
@@ -70,17 +98,15 @@ li:last-child {
 }
 
 .input_holder {
-    height: 50px;
+    height: 45px;
     width: 170px;
     display: block;
 }
 
 .errorMessage {
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     max-width: 960px;
-    margin-top: 20px;
-    margin-bottom: 20px;
     text-align: center;
     font-style: oblique;
 }
@@ -100,6 +126,10 @@ form {
     margin-top: 18px;
 }
 
+.deleteForm {
+    height: 0px;
+}
+
 button {
     width: 72px;
     height: 30px;
@@ -110,6 +140,7 @@ button {
     font-weight: bold;
     margin-bottom: 10px;
 }
+
 #deleteButton {
     transform: translate(220px, -80px);
 }

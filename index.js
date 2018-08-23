@@ -350,7 +350,7 @@ app.get("/list_signups/:cityName", checkForUserSession, (req, res) => {
             if (allCities.includes(req.params.cityName)) {
                 getCitySigs(req.params.cityName) //redirects to filtered page
                     .then(function(signers) {
-                        const htmlString = `<a href="/list_signups">Back to all Sigs</a>`;
+                        const htmlString = `<a href="/list_signups">Back to All Signatures</a>`;
                         res.render("list.handlebars", {
                             layout: "secondary_layout.handlebars",
                             signers: signers,
