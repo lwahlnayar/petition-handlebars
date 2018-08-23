@@ -1,7 +1,7 @@
 const spicedPg = require("spiced-pg");
 
 //Makes connection from server to database
-const db = spicedPg("postgres:Rodney:postgres@localhost:5432/signaturesDb");
+const db = spicedPg(process.env.DATABASE_URL || require("./secrets.json").url);
 
 module.exports.getAllData = function() {
     return db
