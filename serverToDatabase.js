@@ -161,14 +161,17 @@ module.exports.getCitySigs = function(cityarg) {
     return db
         .query(
             `SELECT
-         users.first_name,
-         users.last_name,
-         user_profiles.age,
-         user_profiles.city,
-         user_profiles.homepage
-         FROM user_profiles
-         JOIN users
-          ON users.id = user_profiles.user_id
+             users.id,
+             users.first_name,
+             users.last_name,
+             user_profiles.homepage,
+             user_profiles.city,
+             user_profiles.age
+             FROM users
+             LEFT JOIN user_profiles
+                ON users.id = user_profiles.user_id
+             JOIN signatures
+                ON users.id = signatures.user_id
          WHERE user_profiles.city = $1`,
             [cityarg || null]
         )

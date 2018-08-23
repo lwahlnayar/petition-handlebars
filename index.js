@@ -351,11 +351,11 @@ app.get("/list_signups/:cityName", checkForUserSession, (req, res) => {
             if (allCities.includes(req.params.cityName)) {
                 getCitySigs(req.params.cityName) //redirects to filtered page
                     .then(function(signers) {
-                        const plugin = `<a href="/list_signups">Back to all Sigs</a>`;
+                        const htmlString = `<a href="/list_signups">Back to all Sigs</a>`;
                         res.render("list.handlebars", {
                             layout: "secondary_layout.handlebars",
                             signers: signers,
-                            backButton: plugin,
+                            backButton: htmlString,
                             firstName: names.rows[0].first_name,
                             lastName: names.rows[0].last_name
                         });
@@ -375,6 +375,5 @@ app.get("/logout", (req, res) => {
 
 //add logout button
 //minor bug -> signature can be submitted while blank(hard reset all)
-//small bug -> list of sigs wont appear if you skip profile page
 
 app.listen(8080, chalkAnimation.neon("I'm listening: "));
