@@ -375,4 +375,4 @@ app.get("/logout", (req, res) => {
 //add logout button
 //minor bug -> signature can be submitted while blank(hard reset all)
 
-app.listen(8080, chalkAnimation.neon("I'm listening: "));
+app.listen(process.env.PORT || 8080, chalkAnimation.neon("I'm listening: "));
