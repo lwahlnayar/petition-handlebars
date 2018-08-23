@@ -1,5 +1,5 @@
 <section class="titles">
-  <h1>Welcome, <span class="userSpan">{{currentUser}}</span>!</h1>
+  <h1>Welcome, <span class="userSpan">{{firstName}}</span>!</h1>
   <h2>Sign the petition below to help us make the creation of <span class="ugly">Hawaiian Pizzas</span> a serious
   criminal offense across the globe.</h2>
 </section>
@@ -12,6 +12,7 @@
 </div>
 {{/if}}
 {{>form}}
+{{>footer}}
 <img src="./jackie.png" alt="meme" width= "300px" id="jackie" class="jackieHidden">
 <img src="./jackie2.png" alt="meme" width= "300px" id="jackie2" class="jackieHidden2">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

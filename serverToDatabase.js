@@ -47,6 +47,7 @@ module.exports.getUserEditData = function(idarg) {
         });
 };
 /////////////////////////////////////////////////////////////
+//////////////////////////EDIT QUERY FUNCTIONS /////////////
 module.exports.updateUserTable = function(firstname, lastname, email, id) {
     return db.query(
         `UPDATE users
@@ -90,7 +91,9 @@ module.exports.upsertUserProfiles = function(homepage, city, age, id) {
     );
 };
 
+/////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+
 module.exports.pushSigs = function(sigarg, idarg) {
     return db.query(
         `INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id`,
@@ -134,8 +137,8 @@ module.exports.getIdSql = function(emailarg) {
     ]);
 };
 
-module.exports.getName = function(idarg) {
-    return db.query(`SELECT first_name FROM users WHERE id = $1`, [
+module.exports.getNames = function(idarg) {
+    return db.query(`SELECT first_name, last_name FROM users WHERE id = $1`, [
         idarg || null
     ]);
 };

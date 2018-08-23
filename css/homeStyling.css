@@ -105,6 +105,13 @@ button:hover {
     border: 3.5px black solid;
 }
 
+.footer {
+    text-align: center;
+    transform: translateY(30px);
+    font-size: 15px;
+    font-style: oblique;
+}
+
 /* all Jackie movements below */
 
 .jackieHidden {

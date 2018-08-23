@@ -56,7 +56,8 @@ li:last-child {
 
 #sigId {
     border: black dotted 2px;
-    margin: 30px;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 #thumbsUp {
@@ -108,6 +109,9 @@ button {
     font-weight: bold;
     margin-bottom: 10px;
 }
+#deleteButton {
+    transform: translate(220px, -80px);
+}
 
 button:hover {
     background-color: greenyellow;
@@ -118,6 +122,21 @@ button:hover {
 #deleteButton {
     width: 80px;
     height: 45px;
+}
+
+.editProfile {
+    margin: 3px;
+}
+
+.seeAllLink {
+    margin-bottom: 10px;
+}
+
+.footer {
+    text-align: center;
+    transform: translateY(30px);
+    font-size: 15px;
+    font-style: oblique;
 }
 
 ::-webkit-input-placeholder {

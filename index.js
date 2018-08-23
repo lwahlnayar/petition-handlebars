@@ -12,7 +12,7 @@ const {
     createUser,
     getPasswordSql,
     getIdSql,
-    getName,
+    getNames,
     getIdSig,
     pushProfile,
     getSignature,
@@ -198,10 +198,11 @@ app.get(
     checkForUserSession,
     checkSignedAlready,
     (req, res) => {
-        getName(req.session.loggedIn).then(userName => {
+        getNames(req.session.loggedIn).then(userName => {
             res.render("body_home.handlebars", {
                 layout: "main_layout.handlebars",
-                currentUser: userName.rows[0].first_name
+                firstName: userName.rows[0].first_name,
+                lastName: userName.rows[0].last_name
             });
         });
     }
@@ -215,7 +216,7 @@ app.post("/petition_home", (req, res) => {
         })
         .catch(function(e) {
             console.log("PETITION POST CATCH ERROR:", e);
-            getName(req.session.loggedIn).then(userName => {
+            getNames(req.session.loggedIn).then(userName => {
                 res.render("body_home.handlebars", {
                     layout: "main_layout.handlebars",
                     currentUser: userName.rows[0].first_name,
@@ -299,12 +300,13 @@ app.get("/thankyou", checkForUserSession, checkForSigSession, (req, res) => {
     Promise.all([
         getSignature(req.session.checked),
         countSignatures(),
-        getName(req.session.loggedIn)
+        getNames(req.session.loggedIn)
     ])
         .then(([signature, numSigs, userName]) => {
             res.render("thankyou_body.handlebars", {
                 layout: "secondary_layout.handlebars",
-                currentUser: userName.rows[0].first_name,
+                firstName: userName.rows[0].first_name,
+                lastName: userName.rows[0].last_name,
                 userSignature: signature.rows[0].signature,
                 numberSigners: numSigs.rows[0].count
             });
@@ -322,40 +324,48 @@ app.post("/thankyou", (req, res) => {
 });
 
 app.get("/list_signups", checkForUserSession, (req, res) => {
-    getAllData()
-        .then(function(signers) {
+    Promise.all([getAllData(), getNames(req.session.loggedIn)])
+        .then(([signers, names]) => {
             res.render("list.handlebars", {
                 layout: "secondary_layout.handlebars",
-                signers: signers
+                signers: signers,
+                firstName: names.rows[0].first_name,
+                lastName: names.rows[0].last_name
             });
         })
-        .catch(e => console.log("LIST SIGNUP GET ROUTE:", e));
+        .catch(e => {
+            console.log("LIST SIGNUP GET ROUTE:", e);
+        });
 });
 
 app.get("/list_signups/:cityName", checkForUserSession, (req, res) => {
-    getAllData().then(data => {
-        //this blocks users to enter random urls
-        allCities = [];
-        for (let each in data) {
-            if (data[each].city != null && data[each].city.length != "") {
-                allCities.push(data[each].city);
+    Promise.all([getAllData(), getNames(req.session.loggedIn)]).then(
+        ([data, names]) => {
+            //this blocks users to enter random urls
+            allCities = [];
+            for (let each in data) {
+                if (data[each].city != null && data[each].city.length != "") {
+                    allCities.push(data[each].city);
+                }
+            }
+            if (allCities.includes(req.params.cityName)) {
+                getCitySigs(req.params.cityName) //redirects to filtered page
+                    .then(function(signers) {
+                        const plugin = `<a href="/list_signups">Back to all Sigs</a>`;
+                        res.render("list.handlebars", {
+                            layout: "secondary_layout.handlebars",
+                            signers: signers,
+                            backButton: plugin,
+                            firstName: names.rows[0].first_name,
+                            lastName: names.rows[0].last_name
+                        });
+                    })
+                    .catch(e => console.log("LIST SIGNUP GET ROUTE:", e));
+            } else {
+                res.redirect("/list_signups");
             }
         }
-        if (allCities.includes(req.params.cityName)) {
-            getCitySigs(req.params.cityName) //redirects to filtered page
-                .then(function(signers) {
-                    const plugin = `<a href="/list_signups">Back to all Sigs</a>`;
-                    res.render("list.handlebars", {
-                        layout: "secondary_layout.handlebars",
-                        signers: signers,
-                        backButton: plugin
-                    });
-                })
-                .catch(e => console.log("LIST SIGNUP GET ROUTE:", e));
-        } else {
-            res.redirect("/list_signups");
-        }
-    });
+    );
 });
 
 app.get("/logout", (req, res) => {
