@@ -15,10 +15,10 @@ module.exports.getAllData = function() {
              user_profiles.age,
              signatures.signature
              FROM users
-             JOIN user_profiles
+             LEFT JOIN user_profiles
                 ON users.id = user_profiles.user_id
              JOIN signatures
-                ON user_profiles.user_id = signatures.user_id`
+                ON users.id = signatures.user_id`
         )
         .then(results => {
             return results.rows;
