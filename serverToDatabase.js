@@ -101,13 +101,6 @@ module.exports.pushSigs = function(sigarg, idarg) {
     );
 };
 
-module.exports.pushProfile = function(age, city, homepage, idarg) {
-    return db.query(
-        `INSERT INTO user_profiles (age, city, homepage, user_id) VALUES ($1, $2, $3, $4) RETURNING id`,
-        [age || null, city || null, homepage || null, idarg]
-    );
-};
-
 module.exports.createUser = function(
     firstnamearg,
     lastnamearg,

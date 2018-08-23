@@ -14,7 +14,6 @@ const {
     getIdSql,
     getNames,
     getIdSig,
-    pushProfile,
     getSignature,
     countSignatures,
     getCitySigs,
@@ -100,10 +99,10 @@ app.get("/profile", checkForUserSession, (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
-    pushProfile(
-        req.body.age,
-        req.body.city,
+    upsertUserProfiles(
         req.body.homepage,
+        req.body.city,
+        req.body.age,
         req.session.loggedIn
     )
         .then(pushObj => {
