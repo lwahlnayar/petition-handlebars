@@ -148,7 +148,7 @@ button:hover {
 
 .moveFirst {
     transform: translate(700px, -520px) rotate(720deg);
-    transition-duration: 1s;
+    transition-duration: 2s;
 }
 
 .jackieHidden2 {
@@ -157,7 +157,7 @@ button:hover {
 
 .moveSecond {
     transform: translate(-340px, -520px) rotate(720deg);
-    transition-duration: 1s;
+    transition-duration: 2s;
 }
 
 @media (max-width: 976px) {
