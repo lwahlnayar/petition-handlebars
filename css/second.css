@@ -23,6 +23,7 @@ p {
 }
 
 .contain {
+    position: relative;
     text-align: center;
     width: 100%;
     max-width: 960px;
@@ -133,8 +134,9 @@ button:hover {
 }
 
 .footer {
-    text-align: center;
-    transform: translateY(30px);
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
     font-size: 15px;
     font-style: oblique;
 }
