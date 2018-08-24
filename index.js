@@ -26,13 +26,14 @@ const {
 } = require("./serverToDatabase");
 const { hashPass, checkPass } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
+let secrets;
+
 app.use(
     require("body-parser").urlencoded({
         extended: false
     })
 );
 
-let secrets;
 process.env.NODE_ENV === "production"
     ? (secrets = process.env)
     : (secrets = require("./secrets.json"));
@@ -43,8 +44,6 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14
     })
 );
-
-console.log(secrets);
 
 //PURPOSE: Vulnerabilities
 app.use(csurf()); // use after cookie/body middleware, CSRF attack prevention
@@ -58,7 +57,9 @@ app.use(function(req, res, next) {
 });
 app.disable("x-powered-by");
 
-//Boilerplate above
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////BOILERPLATE ABOVE/////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.use(express.static("./public"));
 app.use(express.static("./css"));
