@@ -44,6 +44,8 @@ app.use(
     })
 );
 
+console.log(secrets);
+
 //PURPOSE: Vulnerabilities
 app.use(csurf()); // use after cookie/body middleware, CSRF attack prevention
 app.use(function(req, res, next) {
