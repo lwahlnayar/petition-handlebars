@@ -32,12 +32,18 @@ app.use(
     })
 );
 
+let secrets;
+process.env.NODE_ENV === "production"
+    ? (secrets = process.env)
+    : (secrets = require("./secrets.json"));
+
 app.use(
     cookieSession({
-        secret: `I like turtles.`,
+        secret: secrets.cookieSecret,
         maxAge: 1000 * 60 * 60 * 24 * 14
     })
 );
+
 //PURPOSE: Vulnerabilities
 app.use(csurf()); // use after cookie/body middleware, CSRF attack prevention
 app.use(function(req, res, next) {
