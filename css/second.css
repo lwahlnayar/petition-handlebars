@@ -104,6 +104,7 @@ li:last-child {
 }
 
 .errorMessage {
+    margin-top: 10px;
     width: 100%;
     font-size: 16px;
     max-width: 960px;

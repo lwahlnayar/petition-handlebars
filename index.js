@@ -24,7 +24,7 @@ const {
     upsertUserProfiles,
     deleteSigRow
 } = require("./serverToDatabase");
-const { hashPass, checkPass } = require("./hashFunctions");
+const { hashPass, checkPass, passRestrictions } = require("./hashFunctions");
 const cookieSession = require("cookie-session");
 let secrets;
 
@@ -185,7 +185,16 @@ app.post("/profile/edit", checkForUserSession, (req, res) => {
                 )
             ])
                 .then(() => {
-                    res.redirect("/petition_home");
+                    getUserEditData(req.session.loggedIn).then(userData => {
+                        if (passRestrictions(req.body.password) == false) {
+                            return res.render("edit.handlebars", {
+                                layout: "secondary_layout.handlebars",
+                                userData: userData,
+                                errorPassword: true
+                            });
+                        }
+                        res.redirect("/petition_home");
+                    });
                 })
                 .catch(e => {
                     getUserEditData(req.session.loggedIn).then(userData => {
@@ -242,6 +251,12 @@ app.get("/register", checkLoginRegister, (req, res) => {
 
 app.post("/register", (req, res) => {
     if (req.body.password.length > 0) {
+        if (passRestrictions(req.body.password) == false) {
+            return res.render("register.handlebars", {
+                layout: "secondary_layout.handlebars",
+                errorPassword: true
+            });
+        }
         hashPass(req.body.password)
             .then(hashedPassword => {
                 return createUser(
@@ -380,8 +395,5 @@ app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/register");
 });
-
-//add logout button
-//minor bug -> signature can be submitted while blank(hard reset all)
 
 app.listen(process.env.PORT || 8080, chalkAnimation.neon("I'm listening: "));

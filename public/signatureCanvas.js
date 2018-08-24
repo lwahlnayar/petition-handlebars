@@ -38,6 +38,9 @@ canvas.addEventListener("mouseup", function() {
     sig.value = canvas.toDataURL();
 });
 
+/////////////////////////////////////ON TOUCH BELOW//////////////////////////////////////////////////////////
+
+//////////////////////////////////RESET BUTTON (BONUS FEATURE)///////////////////////////////////////////////////
 resetButton.addEventListener("click", function() {
     var context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
