@@ -12,7 +12,7 @@ body {
     min-height: 100%;
     width: 100%;
     font-family: sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .contain {
@@ -20,7 +20,7 @@ body {
     text-align: center;
     width: 100%;
     max-width: 960px;
-    height: 100%;
+    height: auto;
 }
 
 nav {
@@ -54,7 +54,7 @@ p {
 }
 
 #hawaii_img {
-    margin: 20px;
+    max-width: 100%;
     margin-top: 50px;
     border: 3.5px black solid;
 }
@@ -66,6 +66,7 @@ p {
 }
 
 h1 {
+    margin-top: 20px;
     margin-bottom: 12px;
 }
 
@@ -98,6 +99,7 @@ li:last-child {
 }
 
 .input_holder {
+    margin-bottom: 10px;
     height: 45px;
     width: 170px;
     display: block;
@@ -127,8 +129,16 @@ form {
     margin-top: 18px;
 }
 
+.numSigs {
+    margin-bottom: 30px;
+}
+
 .deleteForm {
     height: 0px;
+}
+
+.backToReg {
+    margin-top: 10px;
 }
 
 button {
@@ -165,9 +175,13 @@ button:hover {
     margin-bottom: 10px;
 }
 
+.backButton {
+    margin-bottom: 18px;
+}
+
 .footer {
-    position: absolute;
-    bottom: 25px;
+    position: relative;
+    bottom: 10px;
     width: 100%;
     font-size: 15px;
     font-style: oblique;
@@ -189,4 +203,36 @@ button:hover {
 :-moz-placeholder {
     /* Firefox 18- */
     color: pink;
+}
+
+@media (max-width: 976px) {
+    #hawaii_img {
+        margin-top: 100px;
+    }
+
+    #thanksTitle {
+        margin-top: 100px;
+    }
+
+    .ordered_list {
+        margin-bottom: 30px;
+    }
+
+    .editProfile {
+        height: 30px;
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 545px) {
+    #deleteButton {
+        transform: translate(-0, -20px);
+    }
+}
+
+@media (max-width: 344px) {
+    nav a {
+        margin: 8px;
+        margin-right: 10px;
+    }
 }
