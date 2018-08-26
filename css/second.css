@@ -152,6 +152,7 @@ li:last-child {
 }
 
 input {
+    font-size: 16px;
     text-indent: 10px;
     background: white;
     margin-bottom: 1.5px;
@@ -170,6 +171,10 @@ form {
     width: 170px;
     margin: 0 auto;
     margin-top: 18px;
+}
+
+form p {
+    font-size: 14.5px;
 }
 
 .numSigs {
