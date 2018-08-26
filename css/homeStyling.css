@@ -5,16 +5,15 @@
     background: tomato;
 }
 
-html,
-body {
+html {
     max-width: 100%;
     font-family: sans-serif;
-    overflow-x: hidden;
 }
 
 body {
     display: flex;
     justify-content: center;
+    overflow-x: hidden;
 }
 
 .wrapper {
@@ -158,28 +157,32 @@ button:hover {
 /* all Jackie movements below */
 
 .jackieHidden {
-    transform: translateX(10000px);
+    position: absolute;
+    right: -1000px;
+    top: 240px;
 }
 
 .moveFirst {
-    transform: translate(700px, -520px) rotate(720deg);
+    transform: translateX(-900px) rotate(1080deg);
     transition-duration: 2s;
 }
 
 .jackieHidden2 {
-    transform: translateX(-10000px);
+    position: absolute;
+    left: -1000px;
+    top: 240px;
 }
 
 .moveSecond {
-    transform: translate(-340px, -520px) rotate(720deg);
+    transform: translateX(900px) rotate(-1080deg);
     transition-duration: 2s;
 }
 
 @media (max-width: 976px) {
-    #jackie {
+    .jackie {
         display: none;
     }
-    #jackie2 {
+    .jackie2 {
         display: none;
     }
     h1 {

@@ -1,15 +1,13 @@
 (function() {
-    var jackie = document.getElementById("jackie");
-    var jackie2 = document.getElementById("jackie2");
+    var jackie = $(".jackie");
+    var jackie2 = $(".jackie2");
 
     var moveJackie = function() {
-        jackie.classList.remove("jackieHidden");
-        jackie.classList.add("moveFirst");
+        jackie.addClass("moveFirst");
     };
 
     var moveJackie2 = function() {
-        jackie2.classList.remove("jackieHidden2");
-        jackie2.classList.add("moveSecond");
+        jackie2.addClass("moveSecond");
     };
 
     setTimeout(moveJackie, 300);
