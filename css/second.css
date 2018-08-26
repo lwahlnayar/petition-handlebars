@@ -109,6 +109,10 @@ h1 {
     margin: 4px;
 }
 
+.login h3 {
+    margin-top: 40px;
+}
+
 .x {
     padding-top: 16px;
 }
