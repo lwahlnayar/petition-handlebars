@@ -234,9 +234,10 @@ app.post("/petition_home", (req, res) => {
         .catch(function(e) {
             console.log("PETITION POST CATCH ERROR:", e);
             getNames(req.session.loggedIn).then(userName => {
+                console.log(userName.rows[0].first_name);
                 res.render("body_home.handlebars", {
                     layout: "main_layout.handlebars",
-                    currentUser: userName.rows[0].first_name,
+                    firstName: userName.rows[0].first_name,
                     error: true
                 });
             });

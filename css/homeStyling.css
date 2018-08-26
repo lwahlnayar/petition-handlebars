@@ -40,6 +40,10 @@ nav a {
 }
 
 nav a:hover {
+    transition: all 0.3s ease;
+    -webkit-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    transform: scale(1.3);
     color: yellow;
     font-size: 19px;
 }
@@ -94,11 +98,13 @@ h1 {
 }
 
 .errorMessage {
-    width: 100%;
-    max-width: 960px;
-    margin-bottom: 18px;
-    font-size: 18px;
-    text-align: center;
+    border: beige groove 1.5px;
+    max-width: 100%;
+    width: max-content;
+    font-size: 16px;
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 15px;
     font-style: oblique;
 }
 
@@ -115,14 +121,21 @@ button {
 
 button:hover {
     background-color: greenyellow;
+    transition: all 0.3s ease;
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+.submitButton {
     position: relative;
-    top: 2px;
 }
 
 #resetButton {
     outline: none;
-    transform: translateX(-13px);
     width: 130px;
+    position: relative;
+    left: -15px;
 }
 
 .below_sig {
