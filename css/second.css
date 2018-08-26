@@ -152,8 +152,13 @@ li:last-child {
 }
 
 input {
+    text-indent: 10px;
     background: white;
     margin-bottom: 1.5px;
+    height: 25px;
+    border-radius: 25px;
+    border: black solid 0.3px;
+    outline: none;
 }
 
 form {
