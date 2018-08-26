@@ -78,7 +78,7 @@ p {
     border: 3.5px black solid;
 }
 
-.registerImage {
+.registerLoginImage {
     max-width: 100%;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -103,10 +103,6 @@ h1 {
 
 .x {
     padding-top: 8px;
-}
-
-.register h1 {
-    margin-top: 40px;
 }
 
 li {
