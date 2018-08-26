@@ -55,21 +55,19 @@ canvas {
 
 .titles {
     width: 100%;
-    max-width: 960px;
+    /* max-width: 960px; */
 }
 
 .image_container {
     display: flex;
     justify-content: center;
     width: 100%;
-    max-width: 960px;
     max-height: 300px;
     margin-bottom: 24px;
 }
 
 form {
-    width: 100%;
-    max-width: 960px;
+    max-width: 100%;
     text-align: center;
     position: relative;
 }
@@ -163,7 +161,7 @@ button:hover {
 }
 
 .moveFirst {
-    transform: translateX(-900px) rotate(1080deg);
+    transform: translateX(-1150px) rotate(1080deg);
     transition-duration: 2s;
 }
 
@@ -174,11 +172,11 @@ button:hover {
 }
 
 .moveSecond {
-    transform: translateX(900px) rotate(-1080deg);
+    transform: translateX(1150px) rotate(-1080deg);
     transition-duration: 2s;
 }
 
-@media (max-width: 976px) {
+@media (max-width: 1310px) {
     .jackie {
         display: none;
     }
