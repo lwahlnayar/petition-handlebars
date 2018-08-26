@@ -4,5 +4,8 @@
   {{#if error}}
   <p class="errorMessage">Oops! Something went wrong!</p>
   {{/if}}
+  {{#if wrongUserPw}}
+  <p class="errorMessage">Wrong Username or Password!</p>
+  {{/if}}
   {{>loginForm}}
 </section>

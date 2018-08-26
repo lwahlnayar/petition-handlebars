@@ -309,6 +309,12 @@ app.post("/login", (req, res) => {
                         }
                     });
                 });
+            } else {
+                console.log("PASSWORD ERROR!");
+                res.render("login.handlebars", {
+                    layout: "secondary_layout.handlebars",
+                    wrongUserPw: true
+                });
             }
         })
         .catch(e => {
