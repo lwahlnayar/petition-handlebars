@@ -128,8 +128,6 @@ app.post("/profile", (req, res) => {
 
 app.get("/profile/edit", checkForUserSession, (req, res) => {
     getUserEditData(req.session.loggedIn).then(userData => {
-        console.log("LOGGED IN SESSION COOKIE-->", req.session.loggedIn);
-        console.log("USER DATA from GETUSEREDITDATA --->", userData);
         res.render("edit.handlebars", {
             layout: "secondary_layout.handlebars",
             userData: userData
