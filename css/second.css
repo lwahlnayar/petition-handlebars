@@ -57,6 +57,10 @@ p {
     margin: 2px;
 }
 
+.p_Margin {
+    margin-top: 10px;
+}
+
 #hawaii_img {
     max-width: 100%;
     margin-top: 50px;
