@@ -165,6 +165,7 @@ form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    width: 170px;
     margin: 0 auto;
     margin-top: 18px;
 }
