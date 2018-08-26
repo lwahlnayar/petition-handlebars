@@ -162,10 +162,10 @@ input {
 
 form {
     margin-top: 18px;
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 170px;
+    width: 170px; */
     margin: 0 auto;
     margin-top: 18px;
 }
