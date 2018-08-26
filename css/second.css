@@ -189,6 +189,10 @@ form {
     margin-top: 18px;
 }
 
+.register-form {
+    margin-bottom: 10px;
+}
+
 form p {
     font-size: 14.5px;
 }
