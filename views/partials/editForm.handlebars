@@ -1,24 +1,31 @@
 <form method="post" class="register-form" autocomplete="off">
   <div class="input_holder">
-    <input type="text" name="firstname" value="{{userData.first_name}}"> First Name
+    <input type="text" name="firstname" value="{{userData.first_name}}">
+    <p>First Name</p>
   </div>
   <div class="input_holder">
-    <input type="text" name="lastname" value="{{userData.last_name}}"> Last Name
+    <input type="text" name="lastname" value="{{userData.last_name}}">
+    <p>Last Name</p>
   </div>
   <div class="input_holder">
-    <input type="text" name="email" value="{{userData.email}}"> E-mail Address
+    <input type="text" name="email" value="{{userData.email}}">
+    <p>E-mail Address</p>
   </div>
   <div class="input_holder">
-    <input type="password" name="password" value=""> Password
+    <input type="password" name="password" value="">
+    <p>Password</p>
   </div>
   <div class="input_holder">
-    <input type="text" name="age" value="{{userData.age}}"> Age
+    <input type="text" name="age" value="{{userData.age}}">
+    <p>Age</p>
   </div>
   <div class="input_holder">
-    <input type="text" name="city" value="{{userData.city}}"> City
+    <input type="text" name="city" value="{{userData.city}}">
+    <p>City</p>
   </div>
   <div class="input_holder">
-    <input type="text" name="homepage" value="{{userData.homepage}}"> Homepage
+    <input type="text" name="homepage" value="{{userData.homepage}}">
+    <p>Homepage</p>
   </div>
   <input type="hidden" name="_csrf" value="{{csrfToken}}">
   <button name="editButton" class="soundEffect">Update</button>
