@@ -37,9 +37,9 @@ module.exports.getUserEditData = function(idarg) {
            user_profiles.city,
            user_profiles.age
            FROM users
-           JOIN user_profiles
+           LEFT JOIN user_profiles
               ON users.id = user_profiles.user_id
-           WHERE user_profiles.user_id = $1`,
+           WHERE users.id = $1`,
             [idarg || null]
         )
         .then(results => {

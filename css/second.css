@@ -96,9 +96,13 @@ h1 {
     margin-bottom: 12px;
 }
 
-h3 {
+.register h3 {
     font-weight: normal;
     margin: 4px;
+}
+
+.x {
+    padding-top: 8px;
 }
 
 .register h1 {
