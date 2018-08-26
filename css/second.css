@@ -136,7 +136,7 @@ li:last-child {
 .input_holder {
     margin-bottom: 10px;
     height: 45px;
-    width: 170px;
+    width: 210px;
     display: block;
 }
 
@@ -155,8 +155,9 @@ input {
     text-indent: 10px;
     background: white;
     margin-bottom: 1.5px;
-    height: 25px;
-    border-radius: 25px;
+    height: 28px;
+    width: 200px;
+    border-radius: 3px;
     border: black solid 0.3px;
     outline: none;
 }
