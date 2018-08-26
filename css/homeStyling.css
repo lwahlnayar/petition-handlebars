@@ -29,13 +29,18 @@ nav {
     justify-content: flex-end;
 }
 
+nav a:last-child {
+    margin-right: 68px;
+}
+
 nav a {
+    outline: none;
     margin: 12px;
     margin-right: 25px;
     text-decoration: none;
     font-weight: bolder;
     color: whitesmoke;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 nav a:hover {
@@ -188,9 +193,20 @@ button:hover {
     }
 }
 
-@media (max-width: 344px) {
+@media (max-width: 446px) {
     nav a {
-        margin: 8px;
-        margin-right: 10px;
+        font-size: 20px;
+        margin: 5px;
+        margin-right: 8px;
+    }
+
+    nav a:last-child {
+        margin-right: 28px;
+    }
+}
+
+@media (max-width: 352px) {
+    nav a {
+        font-size: 16px;
     }
 }
