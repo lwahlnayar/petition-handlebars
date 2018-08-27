@@ -2,7 +2,6 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
-    background: tomato;
 }
 
 html {
@@ -14,6 +13,7 @@ body {
     display: flex;
     justify-content: center;
     overflow-x: hidden;
+    background: rgba(255, 99, 71, 0.88);
 }
 
 .wrapper {
