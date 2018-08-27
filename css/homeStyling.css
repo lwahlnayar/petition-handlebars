@@ -168,27 +168,27 @@ button:hover {
 
 .jackieHidden {
     position: absolute;
-    right: -1000px;
+    right: -970px;
     top: 240px;
 }
 
 .moveFirst {
-    transform: translateX(-1150px) rotate(1080deg);
+    transform: translateX(-1000px) rotate(1080deg);
     transition-duration: 2s;
 }
 
 .jackieHidden2 {
     position: absolute;
-    left: -1000px;
+    left: -970px;
     top: 240px;
 }
 
 .moveSecond {
-    transform: translateX(1150px) rotate(-1080deg);
+    transform: translateX(1000px) rotate(-1080deg);
     transition-duration: 2s;
 }
 
-@media (max-width: 1310px) {
+@media (max-width: 1023px) {
     .jackie {
         display: none;
     }
